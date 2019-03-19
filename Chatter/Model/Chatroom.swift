@@ -12,7 +12,11 @@ struct Chatroom{
     let title: String
     let desc: String
     let emoji: String
+    let documentID: String 
+    let latitude: Double
+    let longitude: Double
+    let distanceToUser: Double
+    let distanceRadius: Double
     let chatImage: UIImage
-//    let chatImage = UIImageView()
     
 }

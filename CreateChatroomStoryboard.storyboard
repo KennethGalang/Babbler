@@ -40,7 +40,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Emoji!" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hjb-b8-OE3">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Emoji!" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hjb-b8-OE3" customClass="EmojiTextField" customModule="Chatter" customModuleProvider="target">
                                 <rect key="frame" x="162" y="392" width="56" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
@@ -55,6 +55,13 @@
                                     <action selector="createChatroom:" destination="wDU-K0-LRF" eventType="touchUpInside" id="cpD-XG-HRZ"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Distance Radius (1km - 50km) " textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SG4-gl-XFt">
+                                <rect key="frame" x="85" y="205" width="213" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="KRS-d6-FaT"/>
@@ -62,6 +69,7 @@
                     <connections>
                         <outlet property="createButton" destination="eUx-zy-7xj" id="Hkg-9O-Yoc"/>
                         <outlet property="descField" destination="o8F-xb-NMI" id="4ie-BH-QsD"/>
+                        <outlet property="distanceRadius" destination="SG4-gl-XFt" id="ofV-G5-nA5"/>
                         <outlet property="emojiField" destination="hjb-b8-OE3" id="YTF-6S-Osk"/>
                         <outlet property="exitButton" destination="zDI-mh-806" id="7mm-9k-HEV"/>
                         <outlet property="titleField" destination="Fr7-g2-NVW" id="djc-cK-yQS"/>

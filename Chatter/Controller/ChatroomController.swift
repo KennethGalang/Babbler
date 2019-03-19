@@ -31,11 +31,46 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     let headerId = "headerId"
     let cellId = "cellId"
     
-    //    var chatroom_temp = [Chatroom]()
-    var chatroom = Chatroom(title: "", desc: "", emoji: "", chatImage: UIImage(named: "perth_image")!)
-    var cellNumber = 0
+//    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, distanceRadius: 0, chatImage: UIImage(named: "perth_image")!)
+//    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, chatImage: UIImage(named: "perth_image")!)
+    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, distanceRadius: 5.0, chatImage: UIImage(named: "perth_image")!)
     var documentID = "a"
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView?.register(ChatroomMessageCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        self.collectionView.bounces = true
+        self.collectionView.alwaysBounceVertical = true //Scrolling
+        self.collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.interactive //Keyboard drop when scroll
+        
+        collectionView?.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 8, right: 0)
+        
+        
+        //        let indexPath = NSIndexPath(row: self.chatMessages.count-1, section: 0)
+        //        self.collectionView?.scrollToItem(at: indexPath as IndexPath, at: .bottom, animated: true)
+        
+//        print("This is my description\n")
+//        //        print (self.desc)
+//        print("OMFG YES\n", chatroom)
+//        print("wtf man")
+        
+        print("\n\nLAT:" , chatroom.latitude, "LONGITUDE",  chatroom.longitude)
+        print("Distance: ", chatroom.distanceToUser)
+//        print("\n\nDistnce DATA!!!#@!#@!#!@$!@#!@$!: ", chatroom.distanceToUser, "\n\n\n")
+//        print("This is the row picked: ", cellNumber)
+//        print("NOW MY DOC ID OF CHATROOM!", documentID)
+        print(Date())
+        //        title_chat = title_sent
+        
+        setupNavigationBarItems()
+        
+        self.observeMessages()
+        
+        //        setupInputComponents()
+        setupKeyboardObservers()
+        
+    }
     
     
     func observeMessages(){
@@ -84,35 +119,7 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        collectionView?.register(ChatroomMessageCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        self.collectionView.bounces = true
-        self.collectionView.alwaysBounceVertical = true //Scrolling
-        self.collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.interactive //Keyboard drop when scroll
-        
-        collectionView?.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 8, right: 0)
-        
-//        let indexPath = NSIndexPath(row: self.chatMessages.count-1, section: 0)
-//        self.collectionView?.scrollToItem(at: indexPath as IndexPath, at: .bottom, animated: true)
-        
-        print("This is my description\n")
-//        print (self.desc)
-        print("OMFG YES\n", chatroom)
-        print("This is the row picked: ", cellNumber)
-        print("NOW MY DOC ID OF CHATROOM!", documentID)
-        print(Date())
-//        title_chat = title_sent
-        
-        setupNavigationBarItems()
-        
-        self.observeMessages()
-        
-//        setupInputComponents()
-        setupKeyboardObservers()
-        
-    }
+   
     
     lazy var inputContainerView: UIView = {
         
@@ -178,7 +185,6 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     @objc func handleKeyboardDidShow(){
-        print("\n\n\nI AM IN HERE \n\n")
         if chatMessages.count > 0{
             let indexPath = NSIndexPath(item: chatMessages.count-1, section: 0)
             collectionView?.scrollToItem(at: indexPath as IndexPath, at: .top, animated: true)
