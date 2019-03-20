@@ -66,7 +66,7 @@ class CreateChatroomController: UIViewController{
                 "emoji": emojiField.text!,
                 "latitude": self.currentLocationLatitude,
                 "longitude": self.currentLocationLongitude,
-                "distanceRadius": distanceRadius.text!
+                "distanceRadius": Double(distanceRadius.text!)
                 ])
                 
             {err in

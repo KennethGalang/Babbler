@@ -23,11 +23,14 @@ class HomeCell: DatasourceCell {
             descTextView.isEditable = false
             emojiTag.text = chatroom.emoji
             chatImageView.image = chatroom.chatImage
-            text = descTextView.text
-            
+            distanceTag.text = String(Double(round(1000*chatroom.distanceToUser)/1000)) + "km away"
+            //If statement for meters, but if km then put in km 
+            radiusTag.text = String(chatroom.distanceRadius) + "km🔘"
+//            text = descTextView.text
         }
         
     }
+    
     override var isHighlighted: Bool{
         didSet{
             let softYellowColour = UIColor(r: 255, g: 255, b: 170)
@@ -79,6 +82,24 @@ class HomeCell: DatasourceCell {
         return label
     }()
     
+    let distanceTag: UILabel = {
+        let label = UILabel()
+        label.text = "L"
+        label.textAlignment = .center
+        label.backgroundColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 11)
+        return label
+    }()
+    
+    let radiusTag: UILabel = {
+        let label = UILabel()
+        label.text = "L"
+        label.textAlignment = .center
+        label.backgroundColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 9)
+        return label
+    }()
+    
     let descTextView: UITextView = {
         let textView = UITextView()
         textView.text = "This chatroom contains many lit things, oh yes i like whats happening here. Yup I'm guessing that this is actually extremely more lit"
@@ -87,6 +108,7 @@ class HomeCell: DatasourceCell {
         //        textView.backgroundColor = .cyan
         return textView
     }()
+    
     
     
     
@@ -100,6 +122,9 @@ class HomeCell: DatasourceCell {
         addSubview(titleLabel)
         addSubview(joinButton)
         addSubview(emojiTag)
+        addSubview(distanceTag)
+        addSubview(radiusTag)
+        
         descTextView.isUserInteractionEnabled = false
         joinButton.isUserInteractionEnabled = false
 //        joinButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -119,6 +144,11 @@ class HomeCell: DatasourceCell {
                           bottomConstant: 0, rightConstant: 12, widthConstant: 50, heightConstant: 74)
         
         emojiTag.anchor(chatImageView.bottomAnchor , left: self.leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 20)
+        
+        distanceTag.anchor(descTextView.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: joinButton.leftAnchor, topConstant: 4, leftConstant: 8,
+                           bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 20)
+        
+        radiusTag.anchor(descTextView.bottomAnchor, left: descTextView.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 4, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 20)
         
     }
     

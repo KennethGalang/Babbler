@@ -57,6 +57,8 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
         
         print("\n\nLAT:" , chatroom.latitude, "LONGITUDE",  chatroom.longitude)
         print("Distance: ", chatroom.distanceToUser)
+        print("Distance radius: ", chatroom.distanceRadius)
+        
 //        print("\n\nDistnce DATA!!!#@!#@!#!@$!@#!@$!: ", chatroom.distanceToUser, "\n\n\n")
 //        print("This is the row picked: ", cellNumber)
 //        print("NOW MY DOC ID OF CHATROOM!", documentID)

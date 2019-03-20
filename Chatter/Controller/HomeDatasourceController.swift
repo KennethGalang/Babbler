@@ -16,9 +16,11 @@ import FirebaseFirestore
 class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
     let locationManager:CLLocationManager = CLLocationManager()
     var check = false
+    var checkForFetchLock = false
     var currentLocation = CLLocation(latitude: 5.0, longitude: 5.0)
     
     var importantDatasource = HomeDatasource(chatroom: [])
+    //Using a list for chatrooms because I need dat index []
     var chatroom_full = [Chatroom]()
     //currentDocumentID Could cause some problems in future.. be careful of it
     var listOfDocumentID = [String]()
@@ -44,7 +46,12 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                 
                 self.currentLocation = currentLocationTemp
                 print("This is latitude: \(currentLocation.coordinate.latitude) , and this is longitude: \(currentLocation.coordinate.longitude)")
-                check = false
+                //Updates location, but also, check becomes false- since I moved 50m, home feed will be refreshed by this
+//                check = false
+                self.importantDatasource = HomeDatasource(chatroom: [])
+                self.chatroom_full = [Chatroom]()
+                
+                fetchHomeFeed()
             }
         }
         //Extra time
@@ -67,87 +74,111 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
         }
     }
 
-
+  
     
     func fetchHomeFeed() {
-        
-//        var listOfDocumentID = [String]()
-        let db = Firestore.firestore()
-        
-        //Ascend by order of distance (closest will be first), also, maybe have a Scroll up to reload button ?
-        //Only if self adds it , will it go right away tho ? Maybe- check if snapshot ADD was made my USERNAME !
-        //So whoever created a chatroom, will have its username as DB, also- mod permissions (gotta change DB now)
-        db.collection("chatrooms").addSnapshotListener { (querySnapshot, err) in
+        print("(If false, then goes and fetchHomeFeed is performed) Check for fetch is : ", checkForFetchLock)
+        if checkForFetchLock == false{
+            checkForFetchLock = true
+            //Maybe try to reset everytime chatroomfull is loaded?
+            self.importantDatasource = HomeDatasource(chatroom: [])
+            self.chatroom_full = [Chatroom]()
             
-            guard let snapshot = querySnapshot else {
-                print("Error fetching snapshots: )")
-                return
-            }
-            snapshot.documentChanges.forEach {diff in
-                if (diff.type == .added){
-                    print ("\nNew chatroom Added9999999999\n")
-                    var latitudeTemp = 5.0
-                    var longitudeTemp = 5.0
-                    var distanceRadiusTemp = 5.0
-                    if let latitude_data = diff.document.data()["latitude"] as? Double{
-                        latitudeTemp = latitude_data
+            let db = Firestore.firestore()
+            self.chatroom_full = [Chatroom]()
+            //Ascend by order of distance (closest will be first), also, maybe have a Scroll up to reload button ?
+            //Only if self adds it , will it go right away tho ? Maybe- check if snapshot ADD was made my USERNAME !
+            //So whoever created a chatroom, will have its username as DB, also- mod permissions (gotta change DB now)
+            db.collection("chatrooms").addSnapshotListener { (querySnapshot, err) in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching snapshots: )")
+                    return
+                }
+                snapshot.documentChanges.forEach {diff in
+                    if (diff.type == .added){
+                        print ("\nNew chatroom Added9999999999\n")
+                        var latitudeTemp = 5.0
+                        var longitudeTemp = 5.0
+                        var distanceRadiusTemp = 5.0
+                        if let latitude_data = diff.document.data()["latitude"] as? Double{
+                            latitudeTemp = latitude_data
+                        }
+                        
+                        if let longitude_data = diff.document.data()["longitude"] as? Double{
+                            longitudeTemp = longitude_data
+                        }
+                        if let distanceRadius_data = diff.document.data()["distanceRadius"] as? Double{
+                            distanceRadiusTemp = distanceRadius_data
+                        }
+                        print("\n\n@@@@Distance Radius : ",distanceRadiusTemp )
+                        let latitude_data = latitudeTemp
+                        let longitude_data = longitudeTemp
+                        let distanceRadius_data = distanceRadiusTemp
+                        
+                        let chatroomLocation = CLLocation(latitude: latitude_data, longitude: longitude_data)
+                        //chatroomLocation.distance(from: self.currentLocation) is in meters.. so convert it to KM
+                        let distance_data = chatroomLocation.distance(from: self.currentLocation)/1000
+//                        print("Distance Radius: ", distanceRadius_data, " And Distance Data: ", distance_data)
+        
+                        //If chatroom is in range
+                        if (distanceRadius_data - distance_data) > 0 {
+                            var titleTemp = ""
+                            var descTemp = ""
+                            var emojiTemp = ""
+                            
+                            print("LOL")
+                            if let title_data = diff.document.data()["title"] as? String{
+                                titleTemp = title_data
+                            }
+                            if let desc_data = diff.document.data()["desc"] as? String{
+                                descTemp = desc_data
+                            }
+                            if let emoji_data = diff.document.data()["emoji"] as? String{
+                                emojiTemp = emoji_data
+                            }
+                            
+                            let title_data = titleTemp
+                            let desc_data = descTemp
+                            let emoji_data = emojiTemp
+                            print("location things: ", chatroomLocation)
+                            print("Self: ", self.currentLocation)
+                            print("distance below", distance_data, "LOL\n\n")
+                            let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: UIImage(named: "class_image")!)
+                            
+                            //Check if document ID Exists already, if it does don't make duplicates
+                            var isInList = false
+                            for chatroom in self.chatroom_full{
+                                if chatroom.documentID == diff.document.documentID{
+                                    isInList = true
+                                }
+                            }
+                            if isInList == false{
+                                self.chatroom_full.append(chatroom)
+                                self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
+                                let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
+                                self.importantDatasource = homeDatasource
+                                self.datasource = homeDatasource
+                            }
+//                            self.chatroom_full.append(chatroom)
+                            
+//                            self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
+//                            let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
+//                            self.importantDatasource = homeDatasource
+//                            self.datasource = homeDatasource
+                            
+                            DispatchQueue.main.async{
+                                self.collectionView?.reloadData()
+                            }
+                            self.checkForFetchLock = false
+                        }
+                        else{
+                            print("Not in chatroom, Eventually, load (similar to twitter) lurkables here under MAIN chatrooms  Yup")
+                        }
                     }
                     
-                    if let longitude_data = diff.document.data()["longitude"] as? Double{
-                        longitudeTemp = longitude_data
-                    }
-                    if let distanceRadius_data = diff.document.data()["distanceRadius"] as? Double{
-                        distanceRadiusTemp = distanceRadius_data
-                    }
-                    let latitude_data = latitudeTemp
-                    let longitude_data = longitudeTemp
-                    let distanceRadius_data = distanceRadiusTemp
-                    
-                    let chatroomLocation = CLLocation(latitude: latitude_data, longitude: longitude_data)
-                    let distance_data = chatroomLocation.distance(from: self.currentLocation)/1000
-                    
-                    //If chatroom is in range
-                    if (distanceRadius_data - distance_data) > 0 {
-                        var titleTemp = ""
-                        var descTemp = ""
-                        var emojiTemp = ""
-                        
-                        print("LOL")
-                        if let title_data = diff.document.data()["title"] as? String{
-                            titleTemp = title_data
-                        }
-                        if let desc_data = diff.document.data()["desc"] as? String{
-                            descTemp = desc_data
-                        }
-                        if let emoji_data = diff.document.data()["emoji"] as? String{
-                            emojiTemp = emoji_data
-                        }
-                        let title_data = titleTemp
-                        let desc_data = descTemp
-                        let emoji_data = emojiTemp
-                        print("location things: ", chatroomLocation)
-                        print("Self: ", self.currentLocation)
-                        print("distance below", distance_data, "LOL\n\n")
-                        let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distance_data, chatImage: UIImage(named: "class_image")!)
-                        
-                        self.chatroom_full.append(chatroom)
-                        
-                        self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
-                        let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
-                        self.importantDatasource = homeDatasource
-                        self.datasource = homeDatasource
-                        
-                        DispatchQueue.main.async{
-                            self.collectionView?.reloadData()
-                        }
-                    }
-                    else{
-                        print("Not in chatroom, Eventually, load (similar to twitter) lurkables here under MAIN chatrooms  Yup")
-                    }
                 }
                 
             }
-            
         }
         
         

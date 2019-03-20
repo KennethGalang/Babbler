@@ -23,10 +23,15 @@ class TabBarController: UITabBarController{
         
         //Dummy controllers
         let viewController = UIViewController()
-        let lurkController = UINavigationController(rootViewController: viewController)
+        
+        
+        let lurkRealController = CreateChatroomController()
+        let lurkController = UINavigationController(rootViewController: lurkRealController)
         lurkController.tabBarItem.title = "Lurk"
         lurkController.tabBarItem.image = UIImage(named: "lurk_trash")
         
+        
+//        let profileController = ProfileController()
         let meController = UINavigationController(rootViewController: viewController)
         meController.tabBarItem.title = "Me"
         meController.tabBarItem.image = UIImage(named: "me_trash")
