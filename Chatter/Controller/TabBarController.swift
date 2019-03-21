@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreLocation
+
 
 class TabBarController: UITabBarController{
     
@@ -15,8 +17,10 @@ class TabBarController: UITabBarController{
     
     
     //SETUP Custom view controllers
-    
-        let homeNavController = UINavigationController(rootViewController: HomeDatasourceController())
+        
+        
+        let homeDataSourceController = HomeDatasourceController()
+        let homeNavController = UINavigationController(rootViewController: homeDataSourceController)
         
         homeNavController.tabBarItem.title = "Home"
         homeNavController.tabBarItem.image = UIImage(named: "home_trash")
@@ -25,22 +29,30 @@ class TabBarController: UITabBarController{
         let viewController = UIViewController()
         
         
-        let lurkRealController = CreateChatroomController()
+        let lurkRealController = LurkController()
         let lurkController = UINavigationController(rootViewController: lurkRealController)
         lurkController.tabBarItem.title = "Lurk"
         lurkController.tabBarItem.image = UIImage(named: "lurk_trash")
         
         
-//        let profileController = ProfileController()
-        let meController = UINavigationController(rootViewController: viewController)
+        
+//        let ok = self.tabBarController?.viewControllers![0] as! HomeDatasourceController
+        
+        let profileController = ProfileController()
+//        profileController.currentLocation = ok.currentLocation
+        let meController = UINavigationController(rootViewController: profileController)
         meController.tabBarItem.title = "Me"
         meController.tabBarItem.image = UIImage(named: "me_trash")
+        
         
         let moreController = UINavigationController(rootViewController: viewController)
         moreController.tabBarItem.title = "More"
         moreController.tabBarItem.image = UIImage(named: "more_trash")
         
         viewControllers = [homeNavController, lurkController, meController, moreController]
+        
+        
+        
     
     }
     

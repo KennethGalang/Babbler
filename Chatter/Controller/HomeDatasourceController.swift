@@ -13,6 +13,16 @@ import SwiftyJSON
 import Firebase
 import FirebaseFirestore
 
+
+class Items: UIViewController {
+    static let sharedInstance = Items()
+    var array = [String]()
+    
+    struct GlobalVariable{
+        static var myString = String()
+    }
+}
+
 class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
     let locationManager:CLLocationManager = CLLocationManager()
     var check = false
@@ -24,6 +34,11 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
     var chatroom_full = [Chatroom]()
     //currentDocumentID Could cause some problems in future.. be careful of it
     var listOfDocumentID = [String]()
+    
+//    SharedData.sharedLocation = CLLocation(latitude: 5.0, longitude: 5.0)
+//    Items.sharedInstance.array.append("New String")
+//    print(Items.GlobalVariable.myString)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -10,9 +10,10 @@ import UIKit
 
 
 class LurkController: UIViewController{
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = .blue
         
     }
 }
