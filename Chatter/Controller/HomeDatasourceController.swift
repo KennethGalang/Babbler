@@ -27,7 +27,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
     let locationManager:CLLocationManager = CLLocationManager()
     var check = false
     var checkForFetchLock = false
-    var currentLocation = CLLocation(latitude: 5.0, longitude: 5.0)
+    static var currentLocation = CLLocation(latitude: 5.0, longitude: 5.0)
     
     var importantDatasource = HomeDatasource(chatroom: [])
     //Using a list for chatrooms because I need dat index []
@@ -54,13 +54,15 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
         
     }
     
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //Continuous location
         for currentLocationTemp in locations {
             if check == true{
                 
-                self.currentLocation = currentLocationTemp
-                print("This is latitude: \(currentLocation.coordinate.latitude) , and this is longitude: \(currentLocation.coordinate.longitude)")
+                HomeDatasourceController.currentLocation = currentLocationTemp
+                print("This is latitude: \(HomeDatasourceController.currentLocation.coordinate.latitude) , and this is longitude: \(HomeDatasourceController.currentLocation.coordinate.longitude)")
                 //Updates location, but also, check becomes false- since I moved 50m, home feed will be refreshed by this
 //                check = false
                 self.importantDatasource = HomeDatasource(chatroom: [])
@@ -73,7 +75,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
         for _ in 1...10000{
             if let location = locations.last{
                 if check == false{
-                    self.currentLocation = location
+                    HomeDatasourceController.currentLocation = location
                 }
             }
         }
@@ -83,7 +85,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
             if check == false{
                 print("%%%%%%%%%%%%%")
                 check = true
-                self.currentLocation = location
+                HomeDatasourceController.currentLocation = location
                 fetchHomeFeed()
             }
         }
@@ -132,7 +134,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                         
                         let chatroomLocation = CLLocation(latitude: latitude_data, longitude: longitude_data)
                         //chatroomLocation.distance(from: self.currentLocation) is in meters.. so convert it to KM
-                        let distance_data = chatroomLocation.distance(from: self.currentLocation)/1000
+                        let distance_data = chatroomLocation.distance(from: HomeDatasourceController.currentLocation)/1000
 //                        print("Distance Radius: ", distanceRadius_data, " And Distance Data: ", distance_data)
         
                         //If chatroom is in range
@@ -156,7 +158,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                             let desc_data = descTemp
                             let emoji_data = emojiTemp
                             print("location things: ", chatroomLocation)
-                            print("Self: ", self.currentLocation)
+                            print("Self: ", HomeDatasourceController.currentLocation)
                             print("distance below", distance_data, "LOL\n\n")
                             let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: UIImage(named: "class_image")!)
                             
@@ -248,8 +250,8 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
         let storyboard = UIStoryboard(name: "CreateChatroomStoryboard", bundle: nil)
         //CreateChat is the ID of the view in the storyboard
         let vc = storyboard.instantiateViewController(withIdentifier: "CreateChat") as! CreateChatroomController
-        vc.currentLocationLatitude = Double(self.currentLocation.coordinate.latitude)
-        vc.currentLocationLongitude = Double(self.currentLocation.coordinate.longitude)
+        vc.currentLocationLatitude = Double(HomeDatasourceController.currentLocation.coordinate.latitude)
+        vc.currentLocationLongitude = Double(HomeDatasourceController.currentLocation.coordinate.longitude)
         present(vc, animated: true, completion: nil)
         print("Create Chatroom page")
     }

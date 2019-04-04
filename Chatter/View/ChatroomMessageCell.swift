@@ -18,7 +18,7 @@ class ChatroomMessageCell: UICollectionViewCell{
         let textView = UITextView()
         textView.backgroundColor = .clear
 //        textView.text = "TES TEST TES"
-        textView.font = UIFont.systemFont(ofSize: 12)
+        textView.font = UIFont.systemFont(ofSize: 13)
         textView.textColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
         let username = UITextView()

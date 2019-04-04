@@ -1,15 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Camera Controller-->
+        <scene sceneID="yH1-fI-uML">
+            <objects>
+                <viewController id="Pow-5W-5II" customClass="CameraController" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yQz-tE-0W3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bxZ-3L-7Wx">
+                                <rect key="frame" x="165" y="591" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.90935187480000002" blue="0.24803178579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="takePictAction:" destination="Pow-5W-5II" eventType="touchUpInside" id="Tcj-Q8-wjn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="eKC-bW-f5x"/>
+                    </view>
+                    <connections>
+                        <outlet property="takePicButton" destination="bxZ-3L-7Wx" id="8vc-ch-ebm"/>
+                        <segue destination="q12-3C-AWQ" kind="presentation" identifier="showPhoto_Segue" animates="NO" id="hqQ-M9-UjA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HjZ-b6-G8y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-295.19999999999999" y="-452.02398800599701"/>
+        </scene>
+        <!--Preview Picture-->
+        <scene sceneID="ZHn-jT-Fp2">
+            <objects>
+                <viewController id="q12-3C-AWQ" customClass="PreviewPicture" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Ji-6I-Cc2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bjF-rz-vsj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bjF-rz-vsj" firstAttribute="bottom" secondItem="x17-eZ-6Jp" secondAttribute="bottom" id="aAB-jW-3yl"/>
+                            <constraint firstItem="bjF-rz-vsj" firstAttribute="leading" secondItem="x17-eZ-6Jp" secondAttribute="leading" id="aos-7c-yLh"/>
+                            <constraint firstItem="bjF-rz-vsj" firstAttribute="trailing" secondItem="x17-eZ-6Jp" secondAttribute="trailing" id="bJB-rL-Jr5"/>
+                            <constraint firstItem="bjF-rz-vsj" firstAttribute="top" secondItem="6Ji-6I-Cc2" secondAttribute="top" id="h7C-E0-ITS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="x17-eZ-6Jp"/>
+                    </view>
+                    <connections>
+                        <outlet property="photo" destination="bjF-rz-vsj" id="N4U-wk-zGh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="amm-oi-2Pf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="424.80000000000001" y="-452.02398800599701"/>
+        </scene>
         <!--Create Chatroom Controller-->
         <scene sceneID="hqi-a2-rBJ">
             <objects>
@@ -62,16 +120,31 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0wN-Q3-mey">
+                                <rect key="frame" x="67" y="69" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5tm-x6-x2E">
+                                <rect key="frame" x="206" y="469" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="📷"/>
+                                <connections>
+                                    <action selector="goToCamera:" destination="wDU-K0-LRF" eventType="touchUpInside" id="wOS-31-a8r"/>
+                                    <segue destination="Pow-5W-5II" kind="showDetail" id="oSK-m0-YSZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="KRS-d6-FaT"/>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="5tm-x6-x2E" id="rCd-u0-9bN"/>
                         <outlet property="createButton" destination="eUx-zy-7xj" id="Hkg-9O-Yoc"/>
                         <outlet property="descField" destination="o8F-xb-NMI" id="4ie-BH-QsD"/>
                         <outlet property="distanceRadius" destination="SG4-gl-XFt" id="ofV-G5-nA5"/>
                         <outlet property="emojiField" destination="hjb-b8-OE3" id="YTF-6S-Osk"/>
                         <outlet property="exitButton" destination="zDI-mh-806" id="7mm-9k-HEV"/>
+                        <outlet property="imageView" destination="0wN-Q3-mey" id="1eB-DM-EzF"/>
                         <outlet property="titleField" destination="Fr7-g2-NVW" id="djc-cK-yQS"/>
                     </connections>
                 </viewController>
@@ -111,7 +184,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qgs-WT-xQ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="493.60000000000002" y="261.31934032983509"/>
+            <point key="canvasLocation" x="-1071" y="-112"/>
         </scene>
     </scenes>
 </document>

@@ -21,6 +21,7 @@
 		2C92C2202242F18B001A2358 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C92C21F2242F18B001A2358 /* ProfileController.swift */; };
 		2C92C2222242F784001A2358 /* LurkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C92C2212242F784001A2358 /* LurkController.swift */; };
 		2C92C22422443035001A2358 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C92C22322443035001A2358 /* SharedData.swift */; };
+		2C92C22722468929001A2358 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C92C22622468929001A2358 /* CameraController.swift */; };
 		2CA14F9B22274E0C00B69F02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CA14F9A22274E0C00B69F02 /* GoogleService-Info.plist */; };
 		2CDA1A2B222DDDCB007D460F /* ChatroomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */; };
 		2CDA1A2D222F4BDE007D460F /* ChatroomController+navbar+input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDA1A2C222F4BDE007D460F /* ChatroomController+navbar+input.swift */; };
@@ -43,9 +44,10 @@
 		2C670EF72224BFFB00CA79B0 /* CreateChatroomStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateChatroomStoryboard.storyboard; sourceTree = "<group>"; };
 		2C670EF92224C17200CA79B0 /* CreateChatroomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatroomController.swift; sourceTree = "<group>"; };
 		2C6F991E2228AEB700D862A6 /* EmojiChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiChecker.swift; sourceTree = "<group>"; };
-		2C92C21F2242F18B001A2358 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		2C92C21F2242F18B001A2358 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		2C92C2212242F784001A2358 /* LurkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LurkController.swift; sourceTree = "<group>"; };
 		2C92C22322443035001A2358 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
+		2C92C22622468929001A2358 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		2CA14F9A22274E0C00B69F02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomController.swift; sourceTree = "<group>"; };
 		2CDA1A2C222F4BDE007D460F /* ChatroomController+navbar+input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatroomController+navbar+input.swift"; sourceTree = "<group>"; };
@@ -90,9 +92,7 @@
 				2C670EF92224C17200CA79B0 /* CreateChatroomController.swift */,
 				2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */,
 				2CDA1A2C222F4BDE007D460F /* ChatroomController+navbar+input.swift */,
-				2CDFA724223B1782009E6306 /* TabBarController.swift */,
-				2C92C21F2242F18B001A2358 /* ProfileController.swift */,
-				2C92C2212242F784001A2358 /* LurkController.swift */,
+				2C92C22622468929001A2358 /* CameraController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -126,6 +126,16 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		2C92C225224432E7001A2358 /* Controller-TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				2CDFA724223B1782009E6306 /* TabBarController.swift */,
+				2C92C2212242F784001A2358 /* LurkController.swift */,
+				2C92C21F2242F18B001A2358 /* ProfileController.swift */,
+			);
+			path = "Controller-TabBar";
+			sourceTree = "<group>";
+		};
 		2CF027AF22123D9D00215BEF = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +162,7 @@
 				2C4273F92214E887005BE980 /* Model */,
 				2C4273FA2214E88C005BE980 /* View */,
 				2C4273F82214E87F005BE980 /* Controller */,
+				2C92C225224432E7001A2358 /* Controller-TabBar */,
 				2CF027BB22123D9D00215BEF /* AppDelegate.swift */,
 				2CF027CD22123DD100215BEF /* HomeController.swift */,
 				2CF027C222123DA000215BEF /* Assets.xcassets */,
@@ -252,6 +263,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Chatter/Pods-Chatter-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/LBTAComponents/LBTAComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
@@ -269,6 +281,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LBTAComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
@@ -330,6 +343,7 @@
 				2CDA1A2D222F4BDE007D460F /* ChatroomController+navbar+input.swift in Sources */,
 				2C427404221CC75C005BE980 /* HomeDatasourceController+navbar.swift in Sources */,
 				2CF027BC22123D9D00215BEF /* AppDelegate.swift in Sources */,
+				2C92C22722468929001A2358 /* CameraController.swift in Sources */,
 				2C92C2222242F784001A2358 /* LurkController.swift in Sources */,
 				2C427402221B848B005BE980 /* HomeCell.swift in Sources */,
 			);

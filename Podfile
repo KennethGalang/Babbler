@@ -12,5 +12,5 @@ target 'Chatter' do
   pod 'TRON', '~> 4.0'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
-
+  pod 'Firebase/Storage'
 end

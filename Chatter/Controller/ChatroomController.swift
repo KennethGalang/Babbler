@@ -23,6 +23,7 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
         let textField = UITextField()
         textField.placeholder = "Chit chat chit chat" //Until I think of something better.. this is kinda lame lol
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont.systemFont(ofSize: 13)
         return textField
     }()
     
@@ -134,7 +135,8 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
 //        textField.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
 //
         let sendButton = UIButton(type: .system)
-        sendButton.backgroundColor = UIColor.blue
+        sendButton.backgroundColor = UIColor.white
+        sendButton.tintColor = .blue
         sendButton.setTitle("Send", for: .normal)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)

@@ -73,7 +73,8 @@ extension ChatroomController {
     private func estimatedFrameForText(text: String) -> CGRect{
         let size = CGSize(width: view.frame.width, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)], context: nil)
+        //Before 13, it was 12... it was perfect, if not perfect, then fix stuff up lol 
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13)], context: nil)
     }
     
     
