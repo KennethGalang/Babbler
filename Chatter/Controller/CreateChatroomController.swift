@@ -73,7 +73,10 @@ class CreateChatroomController: UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         if CreateChatroomController.didTakePic == true{
+            
             imageView.image = CreateChatroomController.imageSelf
+            
+            
         }
     }
     
