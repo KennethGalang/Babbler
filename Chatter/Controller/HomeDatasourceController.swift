@@ -160,7 +160,28 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                             print("location things: ", chatroomLocation)
                             print("Self: ", HomeDatasourceController.currentLocation)
                             print("distance below", distance_data, "LOL\n\n")
-                            let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: UIImage(named: "class_image")!)
+                            
+                            
+                            var chatImage = UIImage(named: "class_image")
+                            let storage = Storage.storage()
+                            let documentIDString = "chatroomImages/" + String(diff.document.documentID)
+                            
+                            let pathReference = storage.reference(withPath: documentIDString)
+                            pathReference.getData(maxSize: 1 * 10240 * 10240) { data, error in
+                                if let error = error {
+                                    // Uh-oh, an error occurred!
+                                    print("WOOWWWW error?", error)
+                                } else {
+                                    // Data for "chatroomImages/randomKey" is returned
+                                    let imageFromDatabase = UIImage(data: data!)
+                                    let imageRotated = imageFromDatabase!.rotate(radians: .pi/2) // Rotate 90 degrees
+                                    chatImage = imageRotated
+                                    print("HO LEE FUCK TOOK SO LONG MAN in homedatasourcecontroller \(documentIDString)")
+                                }
+                            }
+                            
+                            
+                            let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: chatImage!)
                             
                             //Check if document ID Exists already, if it does don't make duplicates
                             var isInList = false

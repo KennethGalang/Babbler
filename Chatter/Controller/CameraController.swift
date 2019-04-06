@@ -224,57 +224,58 @@ class PreviewPicture: UIViewController{
     @objc func savePage(_ sender: Any) {
 //        UIImageWriteToSavedPhotosAlbum(self.imageReceive, nil, nil, nil)
 //        print("SAVING CAMERA IMAGE")
-//        CreateChatroomController.imageSelf =  self.imageReceive
+        
+        CreateChatroomController.imageSelf =  self.imageReceive
         CreateChatroomController.didTakePic = true
         
-        let storage = Storage.storage()
-        let storageRef = storage.reference()
-        let imagesRef = storageRef.child("chatroomImages")
-        let imageR = self.imageReceive
+//        let storage = Storage.storage()
+//        let storageRef = storage.reference()
+//        let imagesRef = storageRef.child("chatroomImages")
+//        let imageR = self.imageReceive
+////
 //
+//        let randomKey = "randomKey"
+//        let chatroomImageRef = imagesRef.child(randomKey)
+////        let data = imageR
+//        let data = imageR!.pngData()
+//
+//        let uploadTask = chatroomImageRef.putData(data!, metadata: nil) { (metadata, error) in
+//            guard let metadata = metadata else {
+//                // Uh-oh, an error occurred!
+//                print("Lmfao wtf")
+//                return
+//            }
+//
+//            // Metadata contains file metadata such as size, content-type.
+//            let size = metadata.size
+//            // You can also access to download URL after upload.
+//            chatroomImageRef.downloadURL { (url, error) in
+//                guard let downloadURL = url else {
+//                    // Uh-oh, an error occurred!
+//                    print("Lmfao wtf2")
+//                    return
+//                }
+//                print(downloadURL)
+//            }
+//        }
         
-        let randomKey = "randomKey"
-        let chatroomImageRef = imagesRef.child(randomKey)
-//        let data = imageR
-        let data = imageR!.pngData()
-        
-        let uploadTask = chatroomImageRef.putData(data!, metadata: nil) { (metadata, error) in
-            guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
-                print("Lmfao wtf")
-                return
-            }
-            
-            // Metadata contains file metadata such as size, content-type.
-            let size = metadata.size
-            // You can also access to download URL after upload.
-            chatroomImageRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    // Uh-oh, an error occurred!
-                    print("Lmfao wtf2")
-                    return
-                }
-                print(downloadURL)
-            }
-        }
-        
-        let pathReference = storage.reference(withPath: "chatroomImages/randomKey")
-        pathReference.getData(maxSize: 1 * 10240 * 10240) { data, error in
-            if let error = error {
-                // Uh-oh, an error occurred!
-                print("WOOWWWW error?", error)
-            } else {
-                // Data for "chatroomImages/randomKey" is returned
-                let imageFromDatabase = UIImage(data: data!)
-                let imageRotated = imageFromDatabase!.rotate(radians: .pi/2) // Rotate 90 degrees
-                CreateChatroomController.imageSelf = imageRotated
-                
-                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-            }
-        }
+//        let pathReference = storage.reference(withPath: "chatroomImages/randomKey")
+//        pathReference.getData(maxSize: 1 * 10240 * 10240) { data, error in
+//            if let error = error {
+//                // Uh-oh, an error occurred!
+//                print("WOOWWWW error?", error)
+//            } else {
+//                // Data for "chatroomImages/randomKey" is returned
+//                let imageFromDatabase = UIImage(data: data!)
+//                let imageRotated = imageFromDatabase!.rotate(radians: .pi/2) // Rotate 90 degrees
+//                CreateChatroomController.imageSelf = imageRotated
+//                print("HO LEE FUCK TOOK SO LONG MAN")
+//                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+//            }
+//        }
         
         
-//        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
  
 }

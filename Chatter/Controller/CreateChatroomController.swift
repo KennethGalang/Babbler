@@ -74,8 +74,15 @@ class CreateChatroomController: UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         if CreateChatroomController.didTakePic == true{
             
-            imageView.image = CreateChatroomController.imageSelf
+            let tempData = CreateChatroomController.imageSelf.jpeg(.lowest)
+            let tempVar = UIImage(data: tempData!)
             
+            imageView.image = tempVar
+            print("Count original: ", CreateChatroomController.imageSelf.jpeg(.highest)!.count)
+            print("Count after vconversion: ", tempVar!.jpeg(.highest)!.count)
+            if let imageData = CreateChatroomController.imageSelf.jpeg(.lowest) {
+                print("Count after jpeg:", imageData.count)
+            }
             
         }
     }
@@ -111,7 +118,28 @@ class CreateChatroomController: UIViewController{
                     }
             }
             
-            let documentID = variable?.documentID
+            let documentID = String(variable!.documentID)
+            
+            let storage = Storage.storage()
+            let storageRef = storage.reference()
+            let imagesRef = storageRef.child("chatroomImages")
+            let imageR = CreateChatroomController.imageSelf
+            //
+            
+            let randomKey = "randomKey"
+            let chatroomImageRef = imagesRef.child(documentID)
+            let data = imageR!.jpeg(.lowest)
+//            let data = imageR!.pngData()
+            
+            
+            let uploadTask = chatroomImageRef.putData(data!, metadata: nil) { (metadata, error) in
+                guard let metadata = metadata else {
+                    // Uh-oh, an error occurred!
+                    print("Lmfao wtf")
+                    return
+                }
+            }
+            
 //            let chatroom = Chatroom(title: titleField.text!, desc: descField.text!, emoji: emojiField.text!, documentID: documentID!, latitude: self.currentLocationLatitude, longitude: self.currentLocationLongitude , distanceToUser: 0.0, distanceRadius: 0.0 , chatImage: UIImage(named: "perth_image")!)
 //            let chatroom = Chatroom(title: titleField.text!, desc: descField.text!, emoji: emojiField.text!, documentID: documentID!, latitude: self.currentLocationLatitude, longitude: self.currentLocationLongitude , distanceToUser: 0.0 , chatImage: UIImage(named: "perth_image")!)
             
@@ -148,6 +176,26 @@ class CreateChatroomController: UIViewController{
     }
     
 }
+
+extension UIImage {
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+    
+    /// Returns the data for the specified image in JPEG format.
+    /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
+    /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
+    func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
+        return jpegData(compressionQuality: jpegQuality.rawValue)
+    }
+}
+
+
+
 
 //Emoji for Keyboard
 class EmojiTextField: UITextField {
