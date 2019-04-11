@@ -12,6 +12,7 @@ import CoreLocation
 import SwiftyJSON
 import Firebase
 import FirebaseFirestore
+import Kingfisher
 
 
 class Items: UIViewController {
@@ -111,9 +112,10 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                     print("Error fetching snapshots: )")
                     return
                 }
+                
                 snapshot.documentChanges.forEach {diff in
-                    if (diff.type == .added){
-                        print ("\nNew chatroom Added9999999999\n")
+                    if (diff.type == .added || diff.type == .modified){
+                        print ("New chatroom Added9999999999\n")
                         var latitudeTemp = 5.0
                         var longitudeTemp = 5.0
                         var distanceRadiusTemp = 5.0
@@ -127,7 +129,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                         if let distanceRadius_data = diff.document.data()["distanceRadius"] as? Double{
                             distanceRadiusTemp = distanceRadius_data
                         }
-                        print("\n\n@@@@Distance Radius : ",distanceRadiusTemp )
+//                        print("\n\n@@@@Distance Radius : ",distanceRadiusTemp )
                         let latitude_data = latitudeTemp
                         let longitude_data = longitudeTemp
                         let distanceRadius_data = distanceRadiusTemp
@@ -142,6 +144,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                             var titleTemp = ""
                             var descTemp = ""
                             var emojiTemp = ""
+                            var urlTemp  = ""
                             
                             print("LOL")
                             if let title_data = diff.document.data()["title"] as? String{
@@ -153,61 +156,146 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                             if let emoji_data = diff.document.data()["emoji"] as? String{
                                 emojiTemp = emoji_data
                             }
+                            if let url_data = diff.document.data()["URL"] as? String{
+                                urlTemp = url_data
+                            }
                             
                             let title_data = titleTemp
                             let desc_data = descTemp
                             let emoji_data = emojiTemp
-                            print("location things: ", chatroomLocation)
-                            print("Self: ", HomeDatasourceController.currentLocation)
-                            print("distance below", distance_data, "LOL\n\n")
+                            var url_data = String(urlTemp)
+//                            print("location things: ", chatroomLocation)
+//                            print("Self: ", HomeDatasourceController.currentLocation)
+//                            print("distance below", distance_data, "LOL\n\n")
                             
                             
-                            var chatImage = UIImage(named: "class_image")
-                            let storage = Storage.storage()
-                            let documentIDString = "chatroomImages/" + String(diff.document.documentID)
+//                            var chatImage = UIImage(named: "class_image")
+//                            let storage = Storage.storage()
+//                            let documentIDString = "chatroomImages/" + String(diff.document.documentID)
+//
+//                            let pathReference = storage.reference(withPath: documentIDString)
+//                            pathReference.getData(maxSize: 1 * 10240 * 10240) { data, error in
+//                                if let error = error {
+//                                    // Uh-oh, an error occurred!
+//                                    print("WOOWWWW error?", error)
+//                                } else {
+//                                    // Data for "chatroomImages/randomKey" is returned
+//                                    let imageFromDatabase = UIImage(data: data!)
+//                                    let imageRotated = imageFromDatabase!.rotate(radians: .pi/2) // Rotate 90 degrees
+//                                    chatImage = imageRotated
+//                                    print("HO LEE FUCK TOOK SO LONG MAN in homedatasourcecontroller \(documentIDString)")
+//
+//                                    let url_real = URL(string: url_data)
+//
+//                                    let imageView = UIImageView()
+//
+//                                    imageView.kf.setImage(with: url_real)
+////                                    let imageREALLOL = UIImage(image: imageView)
+//
+//                                    //////////////////////////////////////////////////////// download differently?
+//                                    let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, URL: url_data, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: chatImage!)
+//
+//                                    //Check if document ID Exists already, if it does don't make duplicates
+//                                    var isInList = false
+//                                    for chatroom in self.chatroom_full{
+//                                        if chatroom.documentID == diff.document.documentID{
+//                                            isInList = true
+//                                        }
+//                                    }
+//
+//                                    if isInList == false{
+//                                        self.chatroom_full.append(chatroom)
+//                                        self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
+//                                        let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
+//                                        self.importantDatasource = homeDatasource
+//                                        self.datasource = homeDatasource
+//                                    }
+//
+//                                    DispatchQueue.main.async{
+//                                        self.collectionView?.reloadData()
+//                                    }
+//                                    self.checkForFetchLock = false
+//                                    //////////////////////////////////////////////////////
+//
+//                                }
+//                            }
                             
-                            let pathReference = storage.reference(withPath: documentIDString)
-                            pathReference.getData(maxSize: 1 * 10240 * 10240) { data, error in
-                                if let error = error {
-                                    // Uh-oh, an error occurred!
-                                    print("WOOWWWW error?", error)
-                                } else {
-                                    // Data for "chatroomImages/randomKey" is returned
-                                    let imageFromDatabase = UIImage(data: data!)
-                                    let imageRotated = imageFromDatabase!.rotate(radians: .pi/2) // Rotate 90 degrees
-                                    chatImage = imageRotated
-                                    print("HO LEE FUCK TOOK SO LONG MAN in homedatasourcecontroller \(documentIDString)")
+                            
+                            
+                            var realChatImage = UIImage(named: "class_image")
+//                            let options: [KingfisherOptionsInfo]? = [.loadDiskFileSynchronously]
+                            print ("oFuck")
+                            print (desc_data)
+                            print (url_data)
+                            print (desc_data)
+                            print (emoji_data)
+                            
+                            
+                            ImageDownloader.default.downloadImage(with: URL(string: url_data)!, options: [], progressBlock: nil) {
+                                (image, error, url, data) in
+//                                print("Downloaded Image: \(image)")
+                                realChatImage = image!
+                                let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, URL: url_data, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: realChatImage!)
+
+                                //Check if document ID Exists already, if it does don't make duplicates
+                                var isInList = false
+                                
+                                var counter = 0
+//                                for chatroomTemp in self.chatroom_full{
+//                                    counter = counter + 1
+//                                    if chatroomTemp.documentID == diff.document.documentID && chatroomTemp.URL != chatroom.URL{
+//                                        self.chatroom_full.remove(at: counter)
+//                                        isInList = true
+//                                    }
+//                                }
+                                
+                                //Take out duplicates, if modified, take out the picture that actually has no picture on it ! filter = keep if this doesnt equal that  
+                                if (diff.type == .modified){
+                                    self.chatroom_full = self.chatroom_full.filter { $0.documentID != diff.document.documentID }
                                 }
-                            }
-                            
-                            
-                            let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: chatImage!)
-                            
-                            //Check if document ID Exists already, if it does don't make duplicates
-                            var isInList = false
-                            for chatroom in self.chatroom_full{
-                                if chatroom.documentID == diff.document.documentID{
-                                    isInList = true
+
+//                                if isInList == false{
+                                    self.chatroom_full.append(chatroom)
+                                    self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
+                                    let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
+                                    self.importantDatasource = homeDatasource
+                                    self.datasource = homeDatasource
+//                                }
+
+                                DispatchQueue.main.async{
+                                    self.collectionView?.reloadData()
                                 }
+                                self.checkForFetchLock = false
+
                             }
-                            if isInList == false{
-                                self.chatroom_full.append(chatroom)
-                                self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
-                                let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
-                                self.importantDatasource = homeDatasource
-                                self.datasource = homeDatasource
-                            }
-//                            self.chatroom_full.append(chatroom)
                             
-//                            self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
-//                            let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
-//                            self.importantDatasource = homeDatasource
-//                            self.datasource = homeDatasource
                             
-                            DispatchQueue.main.async{
-                                self.collectionView?.reloadData()
-                            }
-                            self.checkForFetchLock = false
+                            
+                            
+//                            let chatroom = Chatroom(title: title_data , desc: desc_data , emoji: emoji_data, documentID: diff.document.documentID, URL: url_data, latitude: latitude_data, longitude: longitude_data, distanceToUser: distance_data, distanceRadius: distanceRadius_data, chatImage: realChatImage)
+//
+//                            //Check if document ID Exists already, if it does don't make duplicates
+//                            var isInList = false
+//                            for chatroom in self.chatroom_full{
+//                                if chatroom.documentID == diff.document.documentID{
+//                                    isInList = true
+//                                }
+//                            }
+//
+//                            if isInList == false{
+//                                self.chatroom_full.append(chatroom)
+//                                self.chatroom_full.sort(by: { $0.distanceToUser < $1.distanceToUser } )
+//                                let homeDatasource = HomeDatasource(chatroom: self.chatroom_full)
+//                                self.importantDatasource = homeDatasource
+//                                self.datasource = homeDatasource
+//                            }
+//
+//                            DispatchQueue.main.async{
+//                                self.collectionView?.reloadData()
+//                            }
+//                            self.checkForFetchLock = false
+                            
+                            
                         }
                         else{
                             print("Not in chatroom, Eventually, load (similar to twitter) lurkables here under MAIN chatrooms  Yup")

@@ -94,6 +94,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.17.0)
   - GTMSessionFetcher/Core (1.2.1)
+  - Kingfisher (5.3.1)
   - LBTAComponents (1.0.2)
   - leveldb-library (1.20)
   - nanopb (0.3.901):
@@ -104,12 +105,12 @@ PODS:
   - Protobuf (3.7.0)
   - SwiftyBeaver (1.7.0)
   - SwiftyJSON (4.3.0)
-  - TRON (4.2.1):
+  - TRON (4.2.2):
     - Alamofire (~> 4.5)
-    - TRON/SwiftyJSON (= 4.2.1)
-  - TRON/Core (4.2.1):
+    - TRON/SwiftyJSON (= 4.2.2)
+  - TRON/Core (4.2.2):
     - Alamofire (~> 4.5)
-  - TRON/SwiftyJSON (4.2.1):
+  - TRON/SwiftyJSON (4.2.2):
     - Alamofire (~> 4.5)
     - SwiftyJSON (~> 4.0)
     - TRON/Core
@@ -118,6 +119,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
+  - Kingfisher (~> 5.0)
   - LBTAComponents (~> 1.0.2)
   - SwiftyBeaver
   - TRON (~> 4.0)
@@ -138,6 +140,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - Kingfisher
     - LBTAComponents
     - leveldb-library
     - nanopb
@@ -161,14 +164,15 @@ SPEC CHECKSUMS:
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
   gRPC-Core: 4028031ed2c5267cca0d846c876d8046b1ecb9b6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  Kingfisher: d9e7e0b209b59b8f9873aa2f37654e81a7beea51
   LBTAComponents: c4c8863e0ef6715e378300db148b96a09df656f7
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
   SwiftyBeaver: 4cc0080d2e23f980652e28978db11a5c9da39165
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  TRON: eb0f572d97dd51ec309a27bc785ec82148500512
+  TRON: 7df36a56e7c122b6d11c39e56bba7cf5ea11bbb8
 
-PODFILE CHECKSUM: 7876fa64800cfdd876f10cfcd2a1790bea104ffa
+PODFILE CHECKSUM: c7cd55adb4afc8afc4eb9288059eff0c5b34a8e0
 
 COCOAPODS: 1.6.0

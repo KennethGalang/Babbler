@@ -14,14 +14,12 @@ extension ChatroomController {
     func setupNavigationBarItems() {
         
         navigationController?.navigationBar.backgroundColor = UIColor(r: 204, g: 255, b: 255)
-        
         let titleView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 34, height: 34)) // Add your frames
         let titleImageView = UIImageView(image: UIImage(named: "radius_image")) // Give your image name
         titleImageView.frame = titleView.bounds
         titleView.addSubview(titleImageView)
         titleImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = titleView
-        
     }
     
     //Header Begin

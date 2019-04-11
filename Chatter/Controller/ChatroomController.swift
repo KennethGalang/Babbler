@@ -19,6 +19,7 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     //extension
     var containerViewBottomAnchor: NSLayoutConstraint?
     //
+    
     let inputTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Chit chat chit chat" //Until I think of something better.. this is kinda lame lol
@@ -34,11 +35,26 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     
 //    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, distanceRadius: 0, chatImage: UIImage(named: "perth_image")!)
 //    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, chatImage: UIImage(named: "perth_image")!)
-    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, distanceRadius: 5.0, chatImage: UIImage(named: "perth_image")!)
+    var chatroom = Chatroom(title: "", desc: "", emoji: "", documentID: "", URL: "", latitude: 5.0, longitude: 5.0, distanceToUser: 5.0, distanceRadius: 5.0, chatImage: UIImage(named: "perth_image")!)
     var documentID = "a"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let bgImage = UIImageView();
+        bgImage.image = self.chatroom.chatImage
+//        bgImage.translatesAutoresizingMaskIntoConstraints = true
+//        bgImage.contentMode = .scaleAspectFill
+        bgImage.widthAnchor.constraint(equalToConstant: self.view.bounds.width + 20).isActive = true
+        bgImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height - 50).isActive = true
+        let viewBackground = UIView()
+        viewBackground.addSubview(bgImage)
+        self.collectionView.backgroundView = bgImage
+//        self.view.addSubview(viewBackground)
+//        bgImage.contentMode = .scaleAspectFill
+//        self.collectionView?.backgroundColor = .clear
+        
+        
         collectionView?.register(ChatroomMessageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         self.collectionView.bounces = true
@@ -72,6 +88,8 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
         
         //        setupInputComponents()
         setupKeyboardObservers()
+        
+    
         
     }
     
@@ -180,9 +198,7 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     
     func setupKeyboardObservers(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+  }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self)

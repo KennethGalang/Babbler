@@ -7,6 +7,7 @@
 //
 
 import LBTAComponents
+import Kingfisher
 
 class HomeCell: DatasourceCell {
     var text = ""
@@ -22,7 +23,11 @@ class HomeCell: DatasourceCell {
             descTextView.text = chatroom.desc
             descTextView.isEditable = false
             emojiTag.text = chatroom.emoji
+            
             chatImageView.image = chatroom.chatImage
+            
+//            chatImageView.kf.setImage(with: URL(string: chatroom.URL))
+            
             distanceTag.text = String(Double(round(1000*chatroom.distanceToUser)/1000)) + "km away"
             //If statement for meters, but if km then put in km 
             radiusTag.text = String(chatroom.distanceRadius) + "km🔘"

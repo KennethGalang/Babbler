@@ -12,7 +12,8 @@ struct Chatroom{
     let title: String
     let desc: String
     let emoji: String
-    let documentID: String 
+    let documentID: String
+    let URL: String
     let latitude: Double
     let longitude: Double
     let distanceToUser: Double

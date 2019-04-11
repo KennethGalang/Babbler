@@ -42,7 +42,7 @@ class ChatroomMessageCell: UICollectionViewCell{
 
     
     func setUpView(){
-//        backgroundColor = .yellow
+//        self.backgroundColor = .yellow
         addSubview(bubbleView)
         addSubview(chatMessageText)
         chatMessageText.isUserInteractionEnabled = false

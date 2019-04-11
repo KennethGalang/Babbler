@@ -62,6 +62,7 @@ class CreateChatroomController: UIViewController{
         exitButton.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 30)
         
         imageView.image = UIImage(named: "perth_image")
+        CreateChatroomController.imageSelf = UIImage(named: "perth_image")
         
         imageView.anchor(exitButton.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 8,leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 148)
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -106,9 +107,12 @@ class CreateChatroomController: UIViewController{
                 "emoji": emojiField.text!,
                 "latitude": self.currentLocationLatitude,
                 "longitude": self.currentLocationLongitude,
-                "distanceRadius": Double(distanceRadius.text!)
+                "distanceRadius": Double(distanceRadius.text!),
+                "URL": "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png"
+                //Ok , I need to add this, because
+                //If I don't, homedatasourcecontroller fetchhomefeed will be triggered, WITHOUT a URL - this fcks with grabbing a URL from internet
+                //it crashes the program, so I need this, and the modify will change it to the actual URL
                 ])
-                
             {err in
                 if err != nil{
                         print("error")
@@ -118,25 +122,56 @@ class CreateChatroomController: UIViewController{
                     }
             }
             
+            print("o1")
             let documentID = String(variable!.documentID)
-            
+            print("o2")
             let storage = Storage.storage()
+            print("o3")
             let storageRef = storage.reference()
+            print("o4")
             let imagesRef = storageRef.child("chatroomImages")
+            print("o5")
             let imageR = CreateChatroomController.imageSelf
+            print("o6")
             //
             
+            
             let randomKey = "randomKey"
+            print("o7")
             let chatroomImageRef = imagesRef.child(documentID)
-            let data = imageR!.jpeg(.lowest)
+            print("o8")
+            let data = imageR!.jpegData(compressionQuality: 0.3)
 //            let data = imageR!.pngData()
             
-            
+            print("o9")
             let uploadTask = chatroomImageRef.putData(data!, metadata: nil) { (metadata, error) in
                 guard let metadata = metadata else {
                     // Uh-oh, an error occurred!
                     print("Lmfao wtf")
                     return
+                }
+                
+            
+//                 Metadata contains file metadata such as size, content-type.
+                let size = metadata.size
+                // You can also access to download URL after upload.
+                chatroomImageRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else {
+                        // Uh-oh, an error occurred!
+                        print("Lmfao wtf2")
+                        return
+                    }
+                    print("Below is the download URL")
+                    
+                    print(downloadURL)
+                    
+                    db.collection("chatrooms").document(variable!.documentID).setData(["URL": downloadURL.absoluteString ], merge: true)
+                    
+                    
+                    
+                    UIImageWriteToSavedPhotosAlbum(self.imageView.image!, nil, nil, nil)
+                    print("SAVING CAMERA IMAGE")
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
             
@@ -152,10 +187,14 @@ class CreateChatroomController: UIViewController{
 //            vc?.chatroom = chatroom
 //            vc?.documentID = documentID!
 //            self.navigationController?.pushViewController(vc!, animated: true)
-            UIImageWriteToSavedPhotosAlbum(self.imageView.image!, nil, nil, nil)
-            print("SAVING CAMERA IMAGE")
             
-            dismiss(animated: true, completion: nil)
+            
+            
+            
+//            UIImageWriteToSavedPhotosAlbum(self.imageView.image!, nil, nil, nil)
+//            print("SAVING CAMERA IMAGE")
+            
+//            dismiss(animated: true, completion: nil)
             
             
         }
