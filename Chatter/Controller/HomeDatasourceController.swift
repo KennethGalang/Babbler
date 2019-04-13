@@ -163,7 +163,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
                             let title_data = titleTemp
                             let desc_data = descTemp
                             let emoji_data = emojiTemp
-                            var url_data = String(urlTemp)
+                            let url_data = String(urlTemp)
 //                            print("location things: ", chatroomLocation)
 //                            print("Self: ", HomeDatasourceController.currentLocation)
 //                            print("distance below", distance_data, "LOL\n\n")
@@ -367,17 +367,26 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
     
     var ok = ["one", "two", "three", "four" , "five"]
     
-    //Go to cell of chat room that is clicked
+//    //Go to cell of chat room that is clicked
+//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let storyboard = UIStoryboard(name: "CreateChatroomStoryboard", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "Chatroom") as? ChatroomController
+////        vc?.chatroom_temp = importantDatasource.chatrooms
+//        vc?.chatroom = self.importantDatasource.chatrooms[indexPath.row]
+//        print("$$$$$$$")
+//        vc?.documentID = self.importantDatasource.chatrooms[indexPath.row].documentID
+//        let cell = collectionView.cellForItem(at: indexPath)
+//        self.navigationController?.pushViewController(vc!, animated: true)
+//    }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "CreateChatroomStoryboard", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Chatroom") as? ChatroomController
-//        vc?.chatroom_temp = importantDatasource.chatrooms
+        let vc = storyboard.instantiateViewController(withIdentifier: "ChatroomUIView") as? ChatroomUIViewController
         vc?.chatroom = self.importantDatasource.chatrooms[indexPath.row]
-        print("$$$$$$$")
         vc?.documentID = self.importantDatasource.chatrooms[indexPath.row].documentID
-        let cell = collectionView.cellForItem(at: indexPath)
+//        let cell = collectionView.cellForItem(at: indexPath)
         self.navigationController?.pushViewController(vc!, animated: true)
     }
+    
     
     
     

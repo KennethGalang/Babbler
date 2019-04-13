@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A9C4AAF2D5550677001B2D0 /* Pods_Chatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F360D977CBEA2C97C4B3F5D1 /* Pods_Chatter.framework */; };
+		2C3A8F10225FCD580007DFEE /* ChatroomUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A8F0F225FCD580007DFEE /* ChatroomUIViewController.swift */; };
 		2C4273F72214DB05005BE980 /* HomeDatasourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4273F62214DB05005BE980 /* HomeDatasourceController.swift */; };
 		2C4273FC2214E8DC005BE980 /* HomeHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4273FB2214E8DC005BE980 /* HomeHeaderFooter.swift */; };
 		2C4273FE2214E92D005BE980 /* HomeDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4273FD2214E92D005BE980 /* HomeDatasource.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C3A8F0F225FCD580007DFEE /* ChatroomUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomUIViewController.swift; sourceTree = "<group>"; };
 		2C4273F62214DB05005BE980 /* HomeDatasourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDatasourceController.swift; sourceTree = "<group>"; };
 		2C4273FB2214E8DC005BE980 /* HomeHeaderFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderFooter.swift; sourceTree = "<group>"; };
 		2C4273FD2214E92D005BE980 /* HomeDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDatasource.swift; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		2C92C22322443035001A2358 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		2C92C22622468929001A2358 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		2CA14F9A22274E0C00B69F02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomController.swift; sourceTree = "<group>"; };
+		2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatroomController.swift; path = ../Chatter/Controller/ChatroomController.swift; sourceTree = "<group>"; };
 		2CDA1A2C222F4BDE007D460F /* ChatroomController+navbar+input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatroomController+navbar+input.swift"; sourceTree = "<group>"; };
 		2CDA1A2E222F6199007D460F /* ChatroomMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomMessageCell.swift; sourceTree = "<group>"; };
 		2CDFA724223B1782009E6306 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -84,13 +86,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2C3A8F11225FE17F0007DFEE /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */,
+			);
+			name = "New Group";
+			path = "../New Group";
+			sourceTree = "<group>";
+		};
 		2C4273F82214E87F005BE980 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				2C4273F62214DB05005BE980 /* HomeDatasourceController.swift */,
 				2C427403221CC75C005BE980 /* HomeDatasourceController+navbar.swift */,
 				2C670EF92224C17200CA79B0 /* CreateChatroomController.swift */,
-				2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */,
+				2C3A8F0F225FCD580007DFEE /* ChatroomUIViewController.swift */,
 				2CDA1A2C222F4BDE007D460F /* ChatroomController+navbar+input.swift */,
 				2C92C22622468929001A2358 /* CameraController.swift */,
 			);
@@ -165,6 +176,7 @@
 				2C92C225224432E7001A2358 /* Controller-TabBar */,
 				2CF027BB22123D9D00215BEF /* AppDelegate.swift */,
 				2CF027CD22123DD100215BEF /* HomeController.swift */,
+				2C3A8F11225FE17F0007DFEE /* New Group */,
 				2CF027C222123DA000215BEF /* Assets.xcassets */,
 				2CF027C422123DA000215BEF /* LaunchScreen.storyboard */,
 				2CF027C722123DA000215BEF /* Info.plist */,
@@ -344,6 +356,7 @@
 				2CDA1A2F222F6199007D460F /* ChatroomMessageCell.swift in Sources */,
 				2CDA1A2D222F4BDE007D460F /* ChatroomController+navbar+input.swift in Sources */,
 				2C427404221CC75C005BE980 /* HomeDatasourceController+navbar.swift in Sources */,
+				2C3A8F10225FCD580007DFEE /* ChatroomUIViewController.swift in Sources */,
 				2CF027BC22123D9D00215BEF /* AppDelegate.swift in Sources */,
 				2C92C22722468929001A2358 /* CameraController.swift in Sources */,
 				2C92C2222242F784001A2358 /* LurkController.swift in Sources */,

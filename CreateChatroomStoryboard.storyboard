@@ -152,6 +152,21 @@
             </objects>
             <point key="canvasLocation" x="-311.19999999999999" y="262.21889055472263"/>
         </scene>
+        <!--ChatroomUI View Controller-->
+        <scene sceneID="0Ik-KN-zcs">
+            <objects>
+                <viewController storyboardIdentifier="ChatroomUIView" id="BJC-dw-oFn" customClass="ChatroomUIViewController" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b68-QQ-7IJ" customClass="ClassUIViewController">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ESH-8Y-FOy"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="80T-Pp-2SH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1842.4000000000001" y="-113.79310344827587"/>
+        </scene>
         <!--Chatroom Controller-->
         <scene sceneID="bdW-c3-EY5">
             <objects>
