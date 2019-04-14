@@ -51,7 +51,7 @@
 		2C92C22322443035001A2358 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		2C92C22622468929001A2358 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		2CA14F9A22274E0C00B69F02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatroomController.swift; path = ../Chatter/Controller/ChatroomController.swift; sourceTree = "<group>"; };
+		2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomController.swift; sourceTree = "<group>"; };
 		2CDA1A2C222F4BDE007D460F /* ChatroomController+navbar+input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatroomController+navbar+input.swift"; sourceTree = "<group>"; };
 		2CDA1A2E222F6199007D460F /* ChatroomMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomMessageCell.swift; sourceTree = "<group>"; };
 		2CDFA724223B1782009E6306 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -89,7 +89,6 @@
 		2C3A8F11225FE17F0007DFEE /* New Group */ = {
 			isa = PBXGroup;
 			children = (
-				2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */,
 			);
 			name = "New Group";
 			path = "../New Group";
@@ -98,6 +97,7 @@
 		2C4273F82214E87F005BE980 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2CDA1A2A222DDDCB007D460F /* ChatroomController.swift */,
 				2C4273F62214DB05005BE980 /* HomeDatasourceController.swift */,
 				2C427403221CC75C005BE980 /* HomeDatasourceController+navbar.swift */,
 				2C670EF92224C17200CA79B0 /* CreateChatroomController.swift */,

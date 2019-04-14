@@ -42,22 +42,30 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
         
         let bgImage = UIImageView();
         bgImage.image = self.chatroom.chatImage
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //        blurEffectView.alpha = 0.9;
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        bgImage.addSubview(blurEffectView)
 //        bgImage.translatesAutoresizingMaskIntoConstraints = true
 //        bgImage.contentMode = .scaleAspectFill
-        bgImage.widthAnchor.constraint(equalToConstant: self.view.bounds.width + 20).isActive = true
-        bgImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height - 50).isActive = true
-        let viewBackground = UIView()
-        viewBackground.addSubview(bgImage)
+//        bgImage.widthAnchor.constraint(equalToConstant: self.view.bounds.width + 20).isActive = true
+//        bgImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height - 50).isActive = true
+//        let viewBackground = UIView()
+//        viewBackground.addSubview(bgImage)
+        bgImage.contentMode = .scaleAspectFill
         self.collectionView.backgroundView = bgImage
-//        self.view.addSubview(viewBackground)
-//        bgImage.contentMode = .scaleAspectFill
+//        self.view.addSubview(bmImage)
+        
 //        self.collectionView?.backgroundColor = .clear
         
         
         collectionView?.register(ChatroomMessageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        self.collectionView.bounces = true
+        self.collectionView.bounces = false
         self.collectionView.alwaysBounceVertical = true //Scrolling
+        self.collectionView.isScrollEnabled = true
         self.collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.interactive //Keyboard drop when scroll
         
         collectionView?.contentInset = UIEdgeInsets(top:0, left: 0, bottom: 8, right: 0)
@@ -181,7 +189,7 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
         separatorLineView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
         separatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
         separatorLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
+//        self.collectionView.bounces = false
         return containerView
     }()
     
@@ -198,13 +206,17 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     func setupKeyboardObservers(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
   }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
     
     @objc func handleKeyboardDidShow(){
+        print("did show LOL")
+        self.collectionView.bounces = false
         if chatMessages.count > 0{
+//            self.collectionView.bounces = false
             let indexPath = NSIndexPath(item: chatMessages.count-1, section: 0)
             collectionView?.scrollToItem(at: indexPath as IndexPath, at: .top, animated: true)
         }
