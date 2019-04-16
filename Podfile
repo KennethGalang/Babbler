@@ -15,5 +15,6 @@ target 'Chatter' do
   pod 'Firebase/Storage'
 
   pod 'Kingfisher', '~> 5.0'  
+  pod 'InputBarAccessoryView'
 
 end

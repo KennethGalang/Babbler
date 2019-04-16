@@ -21,6 +21,7 @@ extension ChatroomUIViewController {
         titleView.addSubview(titleImageView)
         titleImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = titleView
+        
     }
     
     //Header Begin
