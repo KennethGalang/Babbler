@@ -40,6 +40,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
 //    Items.sharedInstance.array.append("New String")
 //    print(Items.GlobalVariable.myString)
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -367,7 +368,7 @@ class HomeDatasourceController: DatasourceController, CLLocationManagerDelegate{
     
     var ok = ["one", "two", "three", "four" , "five"]
     
-//    //Go to cell of chat room that is clicked
+    //Go to cell of chat room that is clicked
 //    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let storyboard = UIStoryboard(name: "CreateChatroomStoryboard", bundle: nil)
 //        let vc = storyboard.instantiateViewController(withIdentifier: "Chatroom") as? ChatroomController

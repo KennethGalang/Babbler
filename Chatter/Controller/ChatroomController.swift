@@ -96,6 +96,13 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
         //        setupInputComponents()
         setupKeyboardObservers()
         
+                let window = UIApplication.shared.keyWindow!
+        let v2 = UIView(frame: CGRect(x: 50, y: 50, width: 100, height: 50))
+        
+        v2.backgroundColor = UIColor.white
+                window.addSubview(v2);
+        //        v.backgroundColor = UIColor.black
+        
     
         
     }
@@ -214,7 +221,7 @@ class ChatroomController: UICollectionViewController, UICollectionViewDelegateFl
     
     @objc func handleKeyboardDidShow(){
         print("did show LOL")
-        self.collectionView.bounces = false
+//        self.collectionView.bounces = false
         if chatMessages.count > 0{
 //            self.collectionView.bounces = false
             let indexPath = NSIndexPath(item: chatMessages.count-1, section: 0)

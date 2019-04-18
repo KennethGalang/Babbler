@@ -50,10 +50,11 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
     
     private var keyboardManager = KeyboardManager()
     
-    
+    var customView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isTranslucent = true
         
         
         let background = self.chatroom.chatImage
@@ -77,7 +78,8 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
         view.addSubview(imageView)
         self.view.sendSubviewToBack(imageView)
         
-        view.sendSubviewToBack(inputAccessoryView!)
+        
+        
 //                let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 //                layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 //                layout.itemSize = CGSize(width: view.frame.width, height: 700)
@@ -136,15 +138,27 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
 //        }
         
     
-    
+        
 
         
         
         setupNavigationBarItems()
+        setupFakeNavBar()
         self.observeMessages()
         
+        
+       
+        
+//        let window = UIApplication.shared.keyWindow!
+//        let v = UIView(frame: window.bounds)
+//        window.addSubview(v);
+////        v.backgroundColor = UIColor.black
+//        let v2 = UIView(frame: CGRect(x: 50, y: 50, width: 100, height: 50))
+//        v2.backgroundColor = UIColor.white
+//        v.addSubview(v2)
+        
 //
-//        setupKeyboardObservers()
+        setupKeyboardObservers()
         
 //        collectionview.translatesAutoresizingMaskIntoConstraints = false
 //        collectionview.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -157,6 +171,64 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
         
         
         
+    }
+    
+    
+    
+    func setupFakeNavBar(){
+        // this does the trick
+        DispatchQueue.main.async {
+            let statusBarHeight = UIApplication.shared.statusBarView?.frame.height
+            self.customView.frame = CGRect(x: 0, y: statusBarHeight!, width: self.view.frame.width, height: 44)
+            self.customView.translatesAutoresizingMaskIntoConstraints = false
+            self.customView.backgroundColor = UIColor(r: 204, g: 255, b: 255)
+            self.customView.isUserInteractionEnabled = true
+            let backbutton = UIButton(type: .system)
+            backbutton.setImage(UIImage(named: "backImage"), for: .normal)
+            backbutton.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/7, height: 44)
+            
+            //
+            //
+            //                    backbutton.translatesAutoresizingMaskIntoConstraints = false
+            
+            //                    backbutton.setTitle("Leave", for: .normal)
+            //                    backbutton.backgroundColor = .white
+            backbutton.setTitleColor(.black, for: .normal) // You can change the TitleColor
+            backbutton.addTarget(self, action: #selector(self.backAction), for: .touchUpInside)
+            backbutton.isUserInteractionEnabled = true
+            //                    self.view.addSubview(backbutton)
+            self.customView.addSubview(backbutton)
+            
+            self.customView.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
+            
+            UIApplication.shared.windows.last?.addSubview(self.customView)
+        }
+    }
+    
+    
+    @IBAction func backAction(_ sender: Any) {
+        
+        print("\n\nExiting CHATROOM\n\n")
+//        self.view?.popViewControllerAnimated(true)
+        self.customView.removeFromSuperview()
+        self.navigationController?.popViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
+        
+    }
+    
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        setupFakeNavBar()
+////        navigationController?.setNavigationBarHidden(true, animated: animated)
+//    }
+//
+////
+    var ok: UIView!
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+                self.customView.removeFromSuperview()
     }
     
 //    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
@@ -310,7 +382,7 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
         fillerView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
         fillerView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
         fillerView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
-        fillerView.heightAnchor.constraint(equalToConstant: 51).isActive = true
+        fillerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         
         let sendButton = UIButton(type: .system)
@@ -343,7 +415,7 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
         separatorLineView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(separatorLineView)
         //Add constraints x,y,w,h
-        separatorLineView.leftAnchor.constraint(equalTo: inputTextField.leftAnchor).isActive = true
+        separatorLineView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
         separatorLineView.bottomAnchor.constraint(equalTo: inputTextField.topAnchor).isActive = true
         separatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
         separatorLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -357,45 +429,51 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
         collectionview.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
         collectionview.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
         collectionview.bottomAnchor.constraint(equalTo: separatorLineView.topAnchor).isActive = true
-
+        
         return containerView
+        
     }()
     
     override var inputAccessoryView: UIView? {
         get{
-            
-            return inputContainerView
+            let newView = inputContainerView
+
+
+            return newView
         }
     }
+    
+    
     
     override var canBecomeFirstResponder: Bool {
         return true
     }
     
     
-//    func setupKeyboardObservers(){
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-//
-////        NotificationCenter.default.addObserver(self,selector: #selector(handleKeyboardWillShow),name: UIResponder.keyboardWillShowNotification,object: nil)
-////        NotificationCenter.default.addObserver(self,selector: #selector(handleKeyboardWillHide),name: UIResponder.keyboardWillHideNotification,object: nil)
-////        NotificationCenter.default.addObserver(self,selector: #selector(handleKeyboardWillHide),name: UIResponder.keyboardDidHideNotification,object: nil)
-//
-//    }
+    
+    func setupKeyboardObservers(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+
+//        NotificationCenter.default.addObserver(self,selector: #selector(handleKeyboardWillShow),name: UIResponder.keyboardWillShowNotification,object: nil)
+//        NotificationCenter.default.addObserver(self,selector: #selector(handleKeyboardWillHide),name: UIResponder.keyboardWillHideNotification,object: nil)
+//        NotificationCenter.default.addObserver(self,selector: #selector(handleKeyboardWillHide),name: UIResponder.keyboardDidHideNotification,object: nil)
+
+    }
 //    override func viewDidDisappear(_ animated: Bool) {
 //        super.viewDidDisappear(animated)
 //        NotificationCenter.default.removeObserver(self)
 //    }
 //
 //
-//    @objc func handleKeyboardDidShow(){
-//        print("\nDid show: \(chatMessages.count-1)")
-//        if chatMessages.count > 0{
-//
-//            let indexPath = NSIndexPath(item: chatMessages.count-1, section: 0)
-//            self.collectionview.scrollToItem(at: indexPath as IndexPath, at: .top, animated: true)
-//
-//        }
-//    }
+    @objc func handleKeyboardDidShow(){
+        print("\nDid show: \(chatMessages.count-1)")
+        if chatMessages.count > 0{
+
+            let indexPath = NSIndexPath(item: chatMessages.count-1, section: 0)
+            self.collectionview.scrollToItem(at: indexPath as IndexPath, at: .top, animated: true)
+
+        }
+    }
     
 //    @objc func handleKeyboardWillShow(notification: NSNotification){
 //        let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect
@@ -430,7 +508,14 @@ class ChatroomUIViewController: UIViewController, UICollectionViewDataSource, UI
     
 }
 
-
+extension UIApplication {
+    /// Returns the status bar UIView
+    var statusBarView: UIView? {
+        
+        return value(forKey: "statusBar") as? UIView
+    }
+    
+}
 
 
 

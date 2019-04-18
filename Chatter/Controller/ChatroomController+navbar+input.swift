@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
+
+
 extension ChatroomUIViewController {
     
     func setupNavigationBarItems() {
@@ -21,6 +23,7 @@ extension ChatroomUIViewController {
         titleView.addSubview(titleImageView)
         titleImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = titleView
+//        self.okTemp = self.navigationController!.navigationBar
         
     }
     
